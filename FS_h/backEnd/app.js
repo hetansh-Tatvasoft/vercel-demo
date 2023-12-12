@@ -1,10 +1,15 @@
 const express = require("express");
 const app = express();
 
-app.get("/", function (req, res) {
-  res.send("<h1>WhatsApp Bitches...</h1>");
-});
+const db = require("./db");
 
 app.listen(3000, () => {
   console.log("app is running on 3000");
 });
+
+app.get("/", function (req, res) {
+  res.send("<h1>WhatsApp...</h1>");
+});
+
+app.get("/users", db.getUsers);
+app.get("/users/:id", db.getUserById);
