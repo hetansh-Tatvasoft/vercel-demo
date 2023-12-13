@@ -28,7 +28,23 @@ const getUserById = (request, response) => {
   });
 };
 
+const createUser = (request, response) => {
+  const { name, email, age } = request.body;
+
+  pool.query(
+    "INSERT INTO users (name, email, age) VALUES ($1, $2, $3) RETURNING *",
+    [name, email, age],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(201).send(`User added with ID: ${results.rows[0].id}`);
+    }
+  );
+};
+
 module.exports = {
   getUsers,
   getUserById,
+  createUser,
 };
